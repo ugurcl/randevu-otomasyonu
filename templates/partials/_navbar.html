@@ -1,0 +1,67 @@
+{% load static %}
+<header>
+    <nav class="navbar">
+        <div class="navbar-left-menu">
+            <img src="{% static "images/logo.jpg" %}" alt="logo" class="navbar-logo" />
+            <a href="{% url "index" %}" class="navbar-title">Randevu Otomasyonu</span>
+        </div>
+        <div class="navbar-right-menu">
+            <ul class="navbar-ul">
+                <li class="navbar-links"><a href="{% url 'index' %}">Ana Sayfa</a></li>
+                <li class="navbar-links"><a href="{% url 'about' %}">Hakkımızda</a></li>
+                <li class="navbar-links"><a href="{% url 'contact' %}">İletişim</a></li>
+
+                {% if user.is_authenticated %}
+                    {% if user.profile.is_verified %}
+                      
+                    <li class="navbar-links"> <a href="{% url 'create_appointment' %}">Randevu Oluştur</a></li>
+
+                    {% else %}
+                    <li class="navbar-links"><a href="{% url 'instructor_list' %}">Randevu Al</a></li>
+                    {% endif %}
+               
+                {% endif %}
+
+                {% if not user.is_authenticated %}
+                  
+                <li class="navbar-links login">
+                    <a href="{% url 'login' %}">Giriş Yap</a>
+                </li>
+                <li class="navbar-links"><a href="{% url 'register' %}">Kayıt Ol</a></li>
+                {% endif %}
+            </ul>
+        </div>
+        {% if  user.is_authenticated  %}
+          
+        <li class="dropdown">
+            <img src="{{user.profile.profile_picture.url }}"
+                alt="" />
+            <a href="#" class="dropbtn">{{request.user}}</a>
+
+            <div class="dropdown-content">
+                <a href="{% url 'profile' %}">
+                    <i class="bi bi-person"></i>
+                    <span>Profil</span>
+                </a>
+                <a href="{% url 'password_change' %}">
+                    <i class="bi bi-lock"></i>
+                    <span>Şifre İşlemleri</span>
+                </a>
+                <a href="{% url 'user_appointment_list' %}">
+                    <i class="bi bi-calendar-date"></i>
+                    <span>Randevularım</span>
+                </a>
+                <a href="{% url 'logout' %}">
+                    <i class="bi bi-box-arrow-right"></i>
+                    <span>Çıkış Yap</span>
+                </a>
+            </div>
+        </li>
+        {% endif %}
+        <button class="switch">
+            <i class="bi bi-brightness-high"></i>
+            <i class="bi bi-moon-stars"></i>
+        </button>
+        <button><i class="bi bi-list mobile-menu-toggle"></i></button>
+    </nav>
+</header>

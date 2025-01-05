@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block container %}
+
+<section class="page-not-found">
+    <img src="https://www.bingol.edu.tr/documents/file/bu_BilgolUniverstyLogo/a5png_4bdef62e-b5ca-40b2-b28a-1e23ef74a347-cf10c231-c667-4e4d-9896-40b1f31a0901.png" alt="" class="not-found-image">
+    <div class="not-found-container">
+        <h1>Sayfa Bulunamadı !</h1>
+        <a href="{% url 'index' %}">Geri Dön</a>
+    </div>
+</section>
+
+{% endblock container %}

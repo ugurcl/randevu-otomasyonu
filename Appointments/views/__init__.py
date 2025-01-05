@@ -1,0 +1,6 @@
+from .index_view import IndexView
+from .instructor_list_view import InstructorListView, LoadMoreContentView,SearchInstitution,Search
+from .make_appointment import MakeAppointmentView,GetAppointmentTimes
+from .create_appointment import CreateAppointmentView
+from .user_appointment import UserAppointmentsList
+from .appointment_edit import EditAppointmentVerifiedUser,DeleteAppointment,UpdateCreatedAppointment,DeleteCreatedAppointment

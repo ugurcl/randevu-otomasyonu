@@ -1,0 +1,75 @@
+
+{% extends "base.html" %}
+{% load static %}
+
+{% block container %}
+<section class="profile-section">
+    <h1 class="section-title">Profilinizi Düzenleyin</h1>
+    <div class="profile-container">
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages  %}
+            <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+       
+        </ul>
+        {% endif %}
+
+       
+        <div class="user-profile-container">
+            <form action="" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="profile-title">Profil Ayarları</div>
+                <div class="input-container">
+                    <div class="profile-image-container">
+                        <span>Profil Resmi</span>
+                        <label for="profile-image" class="profile-image-settings">
+                          
+                            <img id="profile-img" src="{{user.profile.profile_picture.url }}" alt="Profil Resmi" width="200" class="profile-image" > 
+                        </label>
+                    </div>
+                    {{profile_form.profile_picture}}
+                  
+                    
+                </div>
+                <div class="input-container">
+                    
+                    <label for="">Kullanıcı Adınız</label>
+                    {{user_form.username}}
+                  
+                </div>
+                <div class="input-container">
+                    <label for="">Adınız</label>
+                    {{user_form.first_name}}
+                </div>
+                <div class="input-container">
+                    <label for="">Soyadınız</label>
+                    {{user_form.last_name}}
+                </div>
+                <div class="input-container">
+                    <label for="">E-Posta Adresiniz</label>
+                    {{user_form.email}}
+                </div>
+                {% if user.profile.is_verified %}
+                <div class="input-container">
+                    <label for="">İletişim E-Posta Adresiniz</label>
+                    {{profile_form.contact_email}}
+                </div>
+                <div class="input-container title">
+                    <label for="">Başlık</label>
+                    {{profile_form.title}}
+                </div>
+                {% endif %}
+                <div class="input-container">
+                    <label for="">Biyografiniz</label>
+                    {{profile_form.bio}}
+                </div>
+               
+                <button type="submit">Kaydet</button>
+            </form>
+        </div>
+     
+    </div>
+</section>
+
+{% endblock container %}

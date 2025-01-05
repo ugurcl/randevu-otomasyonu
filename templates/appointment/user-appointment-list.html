@@ -1,0 +1,42 @@
+{% extends "base.html" %} {% block container %}
+
+<section class="appointment-user-section">
+  <span class="appointment-title">Randevularınız</span>
+
+  <div class="table-container">
+    <table class="appointment-table">
+      <thead>
+        <tr>
+          <th>Eğitmen</th>
+          <th>Randevu Alan</th>
+          <th>Randevu Türü</th>
+          <th>Randevu Durumu</th>
+          <th>Randevu Tarihi</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in appointment_list %}
+          <tr>
+            <td>{{item.appointment.staff_member.user.get_full_name}}</td>
+            <td>{{item.customer.user.get_full_name}}</td>
+            <td>{{item.appointment_type}}</td>
+            {% if item.status == 'Beklemede' %}
+              <td class="">{{item.status}}</td>
+            {% elif item.status == 'Onaylandı' %}
+              <td class="success_text">{{item.status}}</td>
+            {% else %}
+              <td style="color: #b83535;">{{item.status}} </td>
+            {% endif %}
+            
+            <td>{{item.appointment.date|date:"d.m.Y"}} {{item.appointment.time|date:"H:i"}}</td>
+           
+          </tr>
+        {% endfor %}
+       
+      </tbody>
+    </table>
+  </div>
+  <button class="load-more-appointments">Daha eski randevular</button>
+</section>
+
+{% endblock container %}

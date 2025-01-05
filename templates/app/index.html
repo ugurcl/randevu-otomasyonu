@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block container %}
+
+<section class="hero-section">
+  <div class="container">
+    <img
+      src="{% static 'images/logo.jpg' %}"
+      alt=""
+    />
+    <div class="hero-section-right-area">
+      <span class="hero-title">ZX Üniversitesi</span>
+      <span class="hero-sub-title">Randevu Otomasyonu</span>
+      <span class="hero-description"
+        >ZX Üniversitesi’nde öğrenciler ve akademisyenler arasında güçlü bir iletişim kurmak için buradayız! Öğrencilerin öğretim üyelerinden kolayca randevu almasını sağlayan bu platform, eğitimde erişilebilirliği ve etkileşimi artırmayı hedefliyor. Geleceğinizi inşa ederken destek almak için hemen bir randevu oluşturun!</span
+      >
+      <a href="{% url 'instructor_list' %}">Randevu Al</a>
+    </div>
+  </div>
+</section>
+
+{% if profile %}
+  
+<section class="appointment-list-section">
+  <h1>Randevu Al</h1>
+  <div class="appointment-container">
+    
+    {% for item in profile  %}
+    <div class="profile-card">
+      <img
+        src="{{item.profile_picture.url}}"
+        alt=""
+        id="user-profile-image"
+      />
+      <div class="user-profile">
+        <span class="user-name">
+          {% if item.title %}
+            {{item.title}}
+          {% endif %}
+          {{item.user.first_name}} {{item.user.last_name}}</span>
+        <span class="user-about"
+          >{{item.bio}}</span
+        >
+        <div class="user-footer">
+
+          {% if item.contact_email is not None %}
+            
+          <div class="user-email">
+            <i class="bi bi-envelope"></i>
+            <span>{{item.contact_email}}</span>
+          </div>
+          {% endif %}
+          <div class="appointment-detail">
+            <i class="bi bi-arrow-right"></i>
+            <a href="{% url 'make_appointment' slug=item.slug  %}">Randevu Al</a>
+          </div>
+        </div>
+      </div>
+    </div>
+      
+    {% endfor %}
+    
+
+
+  </div>
+
+  <a href="{% url 'instructor_list' %}" class="load-more">Daha Fazla</a>
+</section>
+{% endif %}
+
+<section class="contact">
+  <h1>Bizimle İletişime Geçin</h1>
+  <div class="contact-form">
+    <img src="{% static 'images/contact_us.svg' %}" alt="" />
+    <form action="{% url 'contact' %}" method="post">
+      {% if messages %}
+      <ul class="messages">
+          {% for message in messages %}
+          <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+              {{ message }}
+          </li>
+          {% endfor %}
+      </ul>
+      {% endif %}
+        
+      {% csrf_token %}
+      {{form.name}}
+      {{form.last_name}}
+      {{form.email}}
+      {{form.title}}
+      {{form.content}}
+    
+      <button type="submit">Gönder</button>
+    </form>
+  </div>
+</section>
+
+{% endblock container %}

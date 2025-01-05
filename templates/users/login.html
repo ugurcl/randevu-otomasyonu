@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load static %}
+
+ {% block container %}
+<section class="login-section">
+  <h1 class="login-title">Giriş Yap</h1>
+  <div class="login-container">
+    <img src="{% static 'images/login.svg' %}" alt="" width="400" />
+    <div class="login-right-container">
+      <h1>Başlamak İçin Giriş Yapın</h1>
+      <span>Giriş yapın ve başlayın</span>
+
+      <form method="POST" action="{% url 'login' %}">
+        {% csrf_token %}
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        <div class="input-container">
+          <i class="fas fa-user"></i>
+          {{form.username}}
+          
+        </div>
+        <div class="input-container">
+          <i class="fas fa-lock"></i>
+          {{form.password}}
+        </div>
+        <button type="submit">Giriş Yap</button>
+        <div class="form-footer">
+          <a href="{% url 'password_reset_request' %}" class="forgot-password"
+            >Şifrenizi sıfırlamak için tıklayın</a
+          >
+          <a href="{% url 'register' %}" class="register"
+            >Hesabınız yok mu? Kayıt olun</a
+          >
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+{% endblock container %}

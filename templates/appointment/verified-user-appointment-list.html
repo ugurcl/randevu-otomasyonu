@@ -1,0 +1,102 @@
+{% extends "base.html" %} {% block container %}
+
+<section class="appointment-user-section">
+  <span class="appointment-title">Randevularınız</span>
+
+  <div class="table-container">
+    {% if appointment is not None %}
+    
+    <table class="appointment-table">
+      <thead>
+        <tr>
+           
+          <th>Eğitmen</th>
+          <th>Randevu Alan</th>
+          <th>Randevu Türü</th>
+          <th>Randevu Durumu</th>
+      
+          <th>Randevu Süresi (saat)</th>
+          <th>Randevu Süresi (dakika)</th>
+
+          <th>Randevu Tarihi</th>
+          <th>Randevu Durumu</th>
+          <th>Randevuyu Düzenle</th>
+          <th>Randevuyu Sil</th>
+
+        </tr>
+      </thead>
+     
+      <tbody>
+        
+        {% for item in appointment %}
+          <tr>
+          
+            <td> {{item.appointment.staff_member.user.get_full_name}}</td>
+
+            <td>{{item.customer.user.get_full_name}}</td>
+            <td>{{item.appointment_type}}</td>
+            {% if item.status == 'Onaylandı' %}
+              <td style="color: green;"> {{item.status}}</td>            
+              {% elif item.status == 'İptal Edildi' %}
+              <td style="color: red;">{{item.status}}</td>
+              {% else %}
+              <td style="color: gold;">{{item.status}}</td>
+            {% endif %}
+            <td>{{item.appointment_hour}}</td>
+            <td>{{item.appointment_minut}}</td>
+            <td>{{item.appointment.date|date:"d.m.Y"}} {{item.appointment.time|date:"H:i"}}</td>
+            
+            
+            {% if item.appointment.staff_member.user == request.user %}
+              
+            
+            <form action="{% url 'edit_appointment' id=item.id %}" method="post">
+            {% csrf_token %}
+                <td>{{form.status}}</td>
+                <td>
+            
+                <button type="submit">Kaydet</button>
+            
+                </td>
+            </form>
+
+            <form action="{% url 'delete_appointment' id=item.id %}" method="post">
+              {% csrf_token %}
+                  
+                  <td>
+              
+                  <button type="submit" onclick="return confirmDelete()">Sil</button>
+              
+                  </td>
+              </form>
+              {% else %}
+                <td></td>
+                <td></td>
+                <td></td>
+                
+              {% endif %}
+          
+          </tr>
+        {% endfor %}
+       
+      </tbody>
+      
+    </table>
+    {% else %}
+      <span style="display: block; text-align: center; margin-top: 1.5rem; color: #a86edf; font-weight: 400; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; ">Randevu Bulunamadı</span>
+    {% endif %}
+  </div>
+
+</section>
+
+<script>
+   function confirmDelete() {
+        var confirmation = confirm("Alınan randevuyu kalıcı olarak silmek istediğinize emin misiniz?");
+        if (confirmation) {
+            return true;  
+        } else {
+            return false;  
+        }
+    }
+</script>
+{% endblock container %}

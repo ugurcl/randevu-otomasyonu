@@ -1,0 +1,24 @@
+{% extends "base.html" %} 
+{% load static %}
+
+{% block container %}
+
+<section class="password-reset-section">
+  <h1 class="password-reset-title">Parola Sıfırlama</h1>
+  <div class="password-reset-container">
+    <img src="{% static 'images/password-done.svg' %}" alt="" width="400" />
+    <div class="password-reset-right-container">
+      <h1>Parola Sıfırlama İşlemi Başarılı</h1>
+
+      <div class="new-password-done">
+        <span>
+          Parola Sıfırlandı!
+          <a href="{% url 'login' %}">Lütfen Giriş Yapın</a>
+          &#10004;
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock container %}

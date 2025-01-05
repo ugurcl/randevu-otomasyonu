@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+
+{% block container %}
+<section class="create-appointment">
+  <div class="create-appointment-title">Randevu Düzenle</div>
+
+  <form method="POST">
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+            {{ message }}
+        </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% csrf_token %}
+    <div class="input-container">
+      <label for="">Randevu Tarihi</label>
+      {{form.date}}
+    </div>
+    <div class="input-container">
+      <label for="">Randevu Saati</label>
+      {{form.time}}
+    </div>
+    <div class="input-container">
+      <label for="">Randevu Durumu</label>
+      {{form.appointment_is_active}}
+    </div>
+    <button type="submit">Randevu Oluştur</button>
+  </form>
+</section>
+{% endblock container %}

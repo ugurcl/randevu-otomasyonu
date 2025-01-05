@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block container %}
+
+<section class="register-section">
+  <h1 class="register-title">Kayıt Olun</h1>
+  <div class="register-container">
+    <img src="{% static 'images/sign-up.svg' %}" alt="" width="400" />
+    <div class="login-right-container">
+      <h1>Başlamak İçin Hesap Oluşturun</h1>
+      <span>Kayıt Olun ve Hemen Başlayın!</span>
+
+      <form action="{% url 'register' %}" method="POST">
+        {% csrf_token %}
+        {% if form.errors %}
+        <div class="alert alert-danger">
+            <ul>
+                    {% for field, errors in form.errors.items %}
+                        {% for error in errors %}
+                            <li class="error" style="padding: 10px; border-radius: 0;"> {{ error }}</li>
+                        {% endfor %}
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+                {{ message|safe }}
+            </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        <div class="input-container">
+          <i class="fas fa-user"></i>
+          {{form.username}}
+          
+        </div>
+        <div class="input-container">
+          <i class="fas fa-user"></i>
+          {{form.first_name}}
+        </div>
+        <div class="input-container">
+          <i class="fas fa-user"></i>
+          {{form.last_name}}
+        </div>
+        <div class="input-container">
+          <i class="fas fa-envelope"></i>
+          {{form.email}}
+        </div>
+       
+        <div class="input-container">
+          <i class="fas fa-lock"></i>
+          {{form.password1}}
+        
+        </div>
+       
+        <div class="input-container">
+          <i class="fas fa-lock"></i>
+          {{form.password2}}
+        </div>
+        
+
+        <button type="submit" id="register_btn">Kayıt Ol</button>
+        <div class="form-footer">
+          <p>
+            Zaten bir hesabınız var mı?
+            <a href="{% url 'login' %}" class="login-link">Giriş Yapın</a>
+          </p>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+{% endblock container %}

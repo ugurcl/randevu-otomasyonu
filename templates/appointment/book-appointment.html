@@ -1,0 +1,117 @@
+{% extends "base.html" %} {% block container %}
+<section class="book-appointment-section">
+  <h1 class="appointment-title">Randevu Al</h1>
+
+  <div class="appointment-container">
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+                {{ message }}
+            </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    <div class="profile">
+      <img
+        src="{{profile.profile_picture.url}}"
+        alt=""
+      />
+      <div class="profile-container">
+        <h1 class="profile-name">
+          {% if profile.title is not None  %}
+            
+          {{profile.title}}
+          {% endif %}
+          {% if profile.user.first_name is not None %}
+              {{profile.user.first_name}}
+          {% endif %}
+          {% if profile.user.last_name is not None %}
+              {{profile.user.last_name}}
+          {% endif %}
+          </h1>
+        <span class="about">
+          {% if profile.bio is not None %}
+            
+          {{profile.bio}}
+            {% else %}
+              Biyografi yok.
+          {% endif %}
+        </span>
+        <div class="profile-contact-div">
+          {% if profile.contact_email is not None %}
+            
+          <i class="fas fa-envelope"></i>
+          <span>{{profile.contact_email}}</span>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    
+    {% if appointment %}
+      
+    <div class="book-appointment-container">
+      <form method="POST">
+       
+        {% csrf_token %}
+        <h1>Uygun Randevu Tarihleri</h1>
+        <select class="appointment-date-select" name="appointment_date">
+          <option value="">Tarih Seçin</option>
+          {% for item in appointment %}
+            <option value="{{item}}">{{item}}</option>
+          {% endfor %}
+          
+         
+        </select>
+        <select class="appointment-time-select" name="appointment_time">
+          <option value="">Saat Seçin</option>
+
+        </select>
+        {{form.appointment_type}}
+        <span>Randevu sürenizi girin</span>
+        {{form.time}}
+        
+        {{form.content}}
+        <button type="submit" class="form-button">Randevu al</button>
+      </form>
+      </div>
+      {% endif %}
+    </div>
+  </section>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+
+    $(document).ready(function(){
+
+      $('.appointment-date-select').change(function(){
+        var selected_date = $(this).val();
+        var userSlug = "{{ profile.slug|escapejs }}";
+        console.log(userSlug)
+        const timeSelect = $('.appointment-time-select'); // Saat select 
+        timeSelect.html('<option value="">Saatler yükleniyor...</option>');
+        $.ajax({
+                url: '/get-times/'+userSlug, 
+                data: { date: selected_date, slug:userSlug }, 
+                success: function (data) {
+                    timeSelect.empty();
+
+                    if (data.times && data.times.length > 0) {
+                        $.each(data.times, function (index, time) {
+                            timeSelect.append(new Option(time, time));
+                        });
+                    } else {
+                        timeSelect.append(new Option('Bu tarih için uygun saat yok', ''));
+                    }
+                },
+                error: function (e) {
+                    timeSelect.html('<option value="">Saatler yüklenemedi</option>');
+                    console.log(e.message)
+                }
+            });
+      })
+    })
+
+
+  </script>
+  {% endblock container %}

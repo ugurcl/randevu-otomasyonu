@@ -1,0 +1,25 @@
+@import url("https://fonts.googleapis.com/css2?family=Ruthie&family=Sora:wght@100..800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Ruthie&family=Sora:wght@100..800&display=swap");
+@import 'variables';
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  list-style-type: none;
+  text-decoration: none;
+  border: none;
+  background: none;
+}
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px var(--theme_hover_color);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--theme_hover_color);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--theme_hover_color);
+}

@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+
+{% block container %}
+<section class="create-appointment">
+  <div class="create-appointment-title">Randevu Oluştur</div>
+
+  <form method="POST">
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+            {{ message }}
+        </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% csrf_token %}
+    <div class="input-container">
+      <label for="">Randevu Tarihi</label>
+      {{form.date}}
+    </div>
+    <div class="input-container">
+      <label for="">Randevu Saati</label>
+      {{form.time}}
+    </div>
+    <div class="input-container">
+      <label for="">Randevu Durumu</label>
+      {{form.appointment_is_active}}
+    </div>
+    <button type="submit">Randevu Oluştur</button>
+  </form>
+</section>
+<section class="appointment-user-section">
+  <span class="appointment-title">Oluşturulan Randevularınız</span>
+
+  <div class="table-container">
+    <table class="appointment-table">
+      <thead>
+        <tr>
+          <th>Eğitmen</th>
+          <th>Randevu Durumu</th>
+          <th>Randevu Tarihi</th>
+          <th>Randevuyu Düzenle</th>
+          <th>Randevuyu Sil</th>
+        </tr>
+      </thead>
+      <tbody class="appointment-table">
+        {% for item in appointments  %}
+
+        <tr>
+          <td>{{item.staff_member.user.get_full_name}}</td>
+          {% if item.appointment_is_active %}
+            <td style="color: #66FF00;">Boş</td>
+
+          {% else %}
+            <td style="color: #EF0107;">Dolu</td>
+          {% endif %}
+          
+          <td>{{item.date|date:"d.m.Y"}} {{item.time|time:"H:i"}}</td>
+      
+          <td>
+            <a href="{% url 'updated_created_appointment' id=item.id %}">Düzenle</a>
+          </td>
+
+          
+          <td>
+            <a href="{% url 'delete_created_appointment' id=item.id %}">Randevuyu Sil</a>
+          </td>
+        </tr>
+        {% endfor %}
+       
+      </tbody>
+    </table>
+  </div>
+  
+</section>
+
+{% endblock container %}

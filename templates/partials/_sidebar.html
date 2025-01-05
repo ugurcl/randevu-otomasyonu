@@ -1,0 +1,49 @@
+{% load static %}
+<section class="mobile-menu">
+  <div class="container">
+    <div class="head">
+      <img src="{% static "images/logo.jpg" %}" alt="" />
+      <span>zx Üniversitesi</span>
+    </div>
+
+    <div class="body">
+      <ul>
+        <li><a href="{% url 'index' %}">Ana Sayfa</a></li>
+        <li><a href="{% url 'about' %}">Hakkımızda</a></li>
+        <li><a href="{% url 'contact' %}">İletişim</a></li>
+        {% if user.is_authenticated %}
+        <li><a href="">Randevu Al</a></li>
+        <li><a href="{% url 'profile' %}">Profil</a></li>
+        <li><a href="{% url 'password_change' %}">Şifre İşlemleri</a></li>
+        
+
+        {% if user.profile.is_verified %}
+                      
+        <li class="navbar-links"> <a href="{% url 'create_appointment' %}">Randevu Oluştur</a></li>
+
+        {% else %}
+        <li class="navbar-links"><a href="">Randevu Al</a></li>
+        {% endif %}
+        <li><a href="{% url 'logout' %}">Çıkış Yap</a></li>
+
+        {% endif %}
+
+        {% if not  user.is_authenticated %}
+        <li><a href="{% url 'login' %}">Giriş Yap</a></li>
+        <li><a href="{% url 'register' %}">Kayıt Ol</a></li>
+        {% endif %}
+      
+      </ul>
+    </div>
+    {% if user.is_authenticated %}
+      
+    <span class="user-profile">
+      <img
+        src="{{user.profile.profile_picture.url }}"
+        alt=""
+      />
+      <a href="#" class="user-name">{{request.user}}</a>
+    </span>
+    {% endif %}
+  </div>
+</section>

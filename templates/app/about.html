@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block container %}
+<section class="about-us-section">
+    <h1>Hakkımızda</h1>
+    <div class="about-container">
+      <img src="../static/images/about.png" alt="" />
+      <div class="about-right-container">
+        <span class="title">{{about_title}}</span>
+        {% for item in about_description  %}
+        <span>{{item}}</span>
+        {% endfor %}
+      </div>
+    </div>
+
+    {% if images %}
+      
+    <div class="slider-container">
+      <h1 class="title">Resim Galerisi</h1>
+      <div class="slider">
+        {% for image in images %}
+          <img src="{{image.image.url}}" alt="">
+        {% endfor %}
+      </div>
+      <button class="prev" onclick="moveSlide(-1)">&#10094;</button>
+      <button class="next" onclick="moveSlide(1)">&#10095;</button>
+    </div>
+    {% endif %}
+  </section>
+
+{% endblock container %}

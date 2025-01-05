@@ -1,0 +1,50 @@
+
+{% extends "base.html" %}
+{% load static %}
+{% block container %}
+<section class="contact-section">
+  <h1 class="contact-title">İletişim</h1>
+  <div class="contact-container">
+    <img src="{% static 'images/contact.svg' %}" alt="logo" width="400" />
+    <div class="contact-right-container">
+      <h1>Bize Ulaşın</h1>
+      <span>Sorularınız mı var? Yardım için buradayız!</span>
+
+      <form action="{% url 'contact' %}" method="post">
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+                {{ message }}
+            </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+          
+        {% csrf_token %}
+        {{form.name}}
+        {{form.last_name}}
+        {{form.email}}
+        {{form.title}}
+        {{form.content}}
+        <button type="submit">Gönder</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<section class="map-section">
+  <h1>Üniversitemiz Nerede?</h1>
+  <span
+    >Kampüsümüze nasıl ulaşabileceğinizi görmek için haritamızı inceleyin.</span
+  >
+  <div class="map-container">
+    <iframe
+      src="https://maps.google.com/maps?width=600&amp;height=400&amp;hl=en&amp;q=2880 Broadway, New York&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
+      aria-hidden="false"
+      tabindex="0"
+    >
+    </iframe>
+  </div>
+</section>
+{% endblock container %}

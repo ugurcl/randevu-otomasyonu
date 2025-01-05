@@ -1,0 +1,66 @@
+{% load static %}
+
+<footer>
+  <div class="footer-container">
+    <div class="left-menu">
+      <img src="{% static 'images/logo.jpg' %}" alt="" />
+      <span class="title">zx Üniversitesi</span>
+      <span class="description">
+        zx Üniversitesi, 29 Mayıs 2012 tarihinde Resmi Gazete'de yayımlanan kanunla kurulan 7 yeni üniversiteden biridir. Kuruluşundan bu yana fakülte, yüksekokul, enstitü ve meslek yüksekokullarıyla hızlı bir gelişim göstermiştir.
+
+        Günümüzde 9 fakülte, 2 yüksekokul, 1 enstitü, 7 meslek yüksekokulu, 11 araştırma merkezi ve 1 laboratuvarıyla eğitim-öğretim faaliyetlerini sürdürmekte olan üniversitemizde; 190 programda toplam 18.518 öğrenciye eğitim verilmektedir.
+      </span>
+    </div>
+    <div class="middle-menu">
+      <ul>
+        <li><a href="{% url 'index' %}">Ana Sayfa</a></li>
+        <li><a href="{% url 'about' %}">Hakkımızda</a></li>
+        {% if  user.is_authenticated %}
+          <li><a href="{% url 'instructor_list' %}">Randevu Al</a></li>
+        {% endif %}
+        <li><a href="{% url 'contact' %}">İletişim</a></li>
+      </ul>
+    </div>
+    <div class="right-menu">
+      <ul>
+        <li>
+          <a href="">
+            <i class="bi bi-instagram"> </i>
+            <span>Instagram</span>
+          </a>
+        </li>
+        <li>
+          <a href="">
+            <i class="bi bi-telegram"> </i>
+            <span>Telegram</span>
+          </a>
+        </li>
+        <li>
+          <a href="">
+            <i class="bi bi-facebook"> </i>
+            <span>Facebook</span>
+          </a>
+        </li>
+       
+        <li>
+          <a href=""><i class="bi bi-youtube"> </i> <span>YouTube</span></a>
+        </li>
+       
+        <li>
+          <a href=""
+            ><i class="bi bi-link"> </i> <span>Resmi Web Sitesi</span></a
+          >
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="bottom-footer">
+    <p>
+      &copy; 2024 Randevu Otomasyonu.
+    </p>
+    <p class="created-by">
+      Created by <span class="created">uğur c4lıskan</span>
+    </p>
+  </div>
+</footer>
